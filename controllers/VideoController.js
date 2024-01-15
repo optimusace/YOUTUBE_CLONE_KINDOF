@@ -11,7 +11,7 @@ class VideoController{
             }
             res.status(200).json({success:true,message:"Videos Found",data:videos})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
@@ -25,7 +25,7 @@ class VideoController{
             }
             res.status(200).json({success:true,message:"Video Found",data:video})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }}
 
@@ -36,7 +36,7 @@ class VideoController{
             const addedVideo = await VideoService.addVideo(data)
             res.status(200).json({success:true,message:"New Video created successfully",data:addedVideo})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
@@ -51,7 +51,7 @@ class VideoController{
             }
             res.status(200).json({success:true,message:"Video Updated successfully",data:updatedVideo})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
@@ -65,7 +65,7 @@ class VideoController{
             }
             res.status(200).json({success:true,message:"Video deleted successfully",data:deletedVideo})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 

@@ -31,6 +31,9 @@ userSchema.pre("save", async function(next){
     this.username = validator.escape(this.username)
     this.email = validator.escape(this.email)
     this.password = validator.escape(this.password)
+    if(this.bio){
+        this.bio = validator.escape(this.bio)
+    }
 
     //hash user password before saving to the database
     const saltRounds = 10 

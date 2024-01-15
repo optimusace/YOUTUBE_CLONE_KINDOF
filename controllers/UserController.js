@@ -11,7 +11,7 @@ class UserController{
             }
             res.status(200).json({success:true,message:"Users available",data:users})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
@@ -24,17 +24,18 @@ class UserController{
             }
             res.status(200).json({success:true,message:"User found",data:user})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
     static addUser = async (req,res)=>{
         try{
             const data = req.body
-            const newUser = await UserService.addUser(data)
+            const file = req.file
+            const newUser = await UserService.addUser(data,file)
             res.status(200).json({success:true,message:"User created successfully",data:newUser})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
@@ -42,13 +43,14 @@ class UserController{
         try{
             const id = req.params.id 
             const data = req.body 
-            const updatedUser = await UserService.updateUser(id,data)
+            const file = req.file
+            const updatedUser = await UserService.updateUser(id,data,file)
             if(!updatedUser){
                 return res.status(404).json({success:false,message:"Unable to update user"})
             }
             res.status(200).json({success:true,message:"User updated Successfully",data:updatedUser})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 
@@ -61,7 +63,7 @@ class UserController{
             }
             res.status(200).json({success:true,message:"User deleted successfully",data:deletedUser})
         }catch(err){
-            res.status(500).json({success:false,message:"Internal Server Error",error:err})
+            res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
         }
     }
 }

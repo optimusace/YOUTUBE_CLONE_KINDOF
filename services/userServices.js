@@ -34,9 +34,19 @@ class UserService{
     }
 
     //create new user
-    static addUser = async(data)=>{
+    static addUser = async(data,file)=>{
         try{
-            const newUser = await User.create({})
+            let newUser = null
+            if(file){
+                newUser = await User.create({
+                    ...data,
+                    profilePictureUrl : file.path
+                }) 
+            }else{
+                newUser = await User.create({
+                    ...data
+                })
+            }
             return newUser
         }catch(err){
             throw err
@@ -44,12 +54,23 @@ class UserService{
     }
 
     //update user with new data using id of user
-    static updateUser = async(id,data)=>{
+    static updateUser = async(id,data,file)=>{
         try{
             if(!mongoose.Types.ObjectId.isValid(id)){
                 return null
             }
-            const update = await User.findByIdAndUpdate(id,{})
+
+            let update = null
+            if(file){
+                update = await User.findByIdAndUpdate(id,{
+                    ...data,
+                    profilePictureUrl:file.path
+                })
+            }else{
+                update = await User.findByIdAndUpdate(id,{
+                    ...data
+                })
+            }
             if(!update){
                 return null
             }
