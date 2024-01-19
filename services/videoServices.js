@@ -43,7 +43,7 @@ class VideoService{
     }
 
     //update video 
-    static updateVideo = async(id,data)=>{
+    static updateVideo = async(id,data,file)=>{
         try{
             if(!mongoose.Types.ObjectId.isValid(id)){
                 return null
@@ -62,6 +62,9 @@ class VideoService{
     //delete video 
     static deleteVideo = async(id)=>{
         try{
+            if(!mongoose.Types.ObjectId.isValid(id)){
+                return null
+            }
             const deletedVideo = await Video.findByIdAndDelete(id)
             if(!deletedVideo){
                 return null

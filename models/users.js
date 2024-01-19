@@ -5,21 +5,30 @@ const bcrypt = require("bcrypt")
 const userSchema = new mongoose.Schema({
     username:{
         type:String,
-        required:true
+        required:true,
+        trime:true
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        trim:true,
+        validate:{
+            validator:(value)=>{
+                return validator.isEmail(value)
+            },
+            message:"Invalid e-mail address"
+        }
     },
     password:{
         type:String,
-        required:true
+        required:true,
     },
-    profilePictureUrl:{
+    profile:{
         type:String
     },
     bio:{
-        type:String
+        type:String,
+        trim:true
     },
     dob:{
         type:Date
@@ -27,6 +36,7 @@ const userSchema = new mongoose.Schema({
 },{timestamps:true})
 
 userSchema.pre("save", async function(next){
+
     //sanitize the user inputs
     this.username = validator.escape(this.username)
     this.email = validator.escape(this.email)

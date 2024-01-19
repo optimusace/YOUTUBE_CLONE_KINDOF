@@ -18,7 +18,7 @@ class VideoController{
     //get information related to video using id
     static getVideoById = async(req,res)=>{{
         try{
-            const id = req.params.id 
+            const id = req.params.videoId 
             const video = await VideoService.getVideoById(id)
             if(!video){
                 return res.status(404).json({success:false,message:"Unable to find video"})
@@ -33,7 +33,8 @@ class VideoController{
     static addVideo = async (req,res)=>{
         try{
             const data = req.body 
-            const addedVideo = await VideoService.addVideo(data)
+            const file = req.file
+            const addedVideo = await VideoService.addVideo(data,file)
             res.status(200).json({success:true,message:"New Video created successfully",data:addedVideo})
         }catch(err){
             res.status(500).json({success:false,message:"Internal Server Error",error:err.message})
@@ -43,9 +44,10 @@ class VideoController{
     //update video
     static updateVideo = async (req,res)=>{
         try{
-            const id = req.params.id 
+            const id = req.params.videoId  
             const data = req.body
-            const updatedVideo = await VideoService.updateVideo(id,data)
+            const file = req.file
+            const updatedVideo = await VideoService.updateVideo(id,data,file)
             if(!updatedVideo){
                 return res.status(404).json({success:false,message:"Cannot update video"})
             }
@@ -58,7 +60,7 @@ class VideoController{
     //delete video 
     static deleteVideo = async(req,res)=>{
         try{   
-            const id = req.params.id 
+            const id = req.params.videoId 
             const deletedVideo = await VideoService.deleteVideo(id)
             if(!deletedVideo){
                 return res.status(404).json({success:false,message:"Cannot delete video"})
